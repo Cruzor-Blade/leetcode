@@ -1,10 +1,10 @@
 function maxPoints(points: number[][]): number {
   const m = points.length, n = points[0].length;
   let dp: number[] = points[0].slice();
+  const leftToRight: number[] = new Array(n);
+  const rightToLeft: number[] = new Array(n);
 
   for (let r = 1; r < m; r++) {
-      const leftToRight: number[] = new Array(n);
-      const rightToLeft: number[] = new Array(n);
 
       leftToRight[0] = dp[0];
       for (let c = 1; c < n; c++) {
