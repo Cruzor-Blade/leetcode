@@ -6,17 +6,18 @@ class ListNode {
 
 
 function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
-  if(l1===null) return l2;
-  if(l2===null) return l1;
+    let result: ListNode = {val:0, next:null};
+    let current = result;
+    let remainder = 0;
 
-  const currVal = (l1.val+ l2.val)%10;
+    while (l1 || l2) {
+        current.next = {val: ((l1?.val || 0) + (l2?.val || 0) + remainder) % 10, next: null};
+        remainder = Math.floor(((l1?.val || 0) + (l2?.val || 0) + remainder) / 10);
+        current = current.next;
+        if(l1) l1 = l1.next;   
+        if(l2) l2 = l2.next;
+    };
 
-  let nextNode = addTwoNumbers(l1.next, l2.next);
-  
-  const overflow = (l1.val+l2.val-currVal)/10;
-  if(overflow !=0) {
-    nextNode = addTwoNumbers(nextNode, {val:overflow, next:null});
-  };
-
-  return {val:currVal, next:nextNode};
+    if(remainder) current.next = {val: remainder, next:null};
+    return result.next;
 };
